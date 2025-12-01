@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_vite',
+    'api',
 ]
 
 MIDDLEWARE = [
@@ -114,11 +116,20 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
+import os
 STATIC_URL = 'static/' # to allow the use of static template directive in templates
-STATICFILES_DIRS = [BASE_DIR / "static"] # actually required for accessing static files
-# STATIC_ROOT # only required for prod
+STATICFILES_DIRS = [
+    BASE_DIR / "static"
+] # actually required for accessing static files
+STATIC_ROOT = BASE_DIR / 'static' / 'dist' # only required for prod (not sure, but i think django_vite requires it)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+DJANGO_VITE = {
+  "default": {
+    "dev_mode": DEBUG
+  }
+}

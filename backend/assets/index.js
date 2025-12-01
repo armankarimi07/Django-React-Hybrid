@@ -1,3 +1,5 @@
+// import 'vite/modulepreload-polyfill';
+console.log('index.js');
 function component() {
   const element = document.createElement('div');
   element.innerHTML = 'Hello Vite';

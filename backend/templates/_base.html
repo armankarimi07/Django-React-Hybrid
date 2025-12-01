@@ -1,14 +1,15 @@
-{% load static %}
+{% load django_vite %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    {% vite_hmr_client %}
 </head>
 <body>
     {% block content %}
     {% endblock content %}
-    <script src="{% static 'js/index-bundle.js' %}"></script>
+    {% vite_asset 'assets/index.js' %}
 </body>
 </html>

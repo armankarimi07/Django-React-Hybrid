@@ -69,10 +69,38 @@ This file will create a div component and add it to the body of our template (pr
 
 5. Add vite.config.js to root/ (root/ is backend folder)
 
-6. Add a npm script to run vite, to package.json
-7. run 'npm run build' to check if build works ok
-You should see a index-bundle.js in static/js/
+6. Add a npm script to run vite, to package.json<br>
+7. run 'npm run build' to check if build works ok<br>
+You should see a index-bundle.js in static/js/<br>
 
-8. Now we need to link the bundled file to our django template (standard django, make sure you're properly serving template and static files)
-(i will add it to _base.html, and add an index.html and render it)
-(also i added STATICFILES_DIRS to settings, without it, index-bundle.js may not be served)
+8. Now we need to link the bundled file to our django template (standard django, make sure you're properly serving template and static files)<br>
+(i will add it to _base.html, and add an index.html and render it)<br>
+(also i added STATICFILES_DIRS to settings, without it, index-bundle.js may not be served)<br>
+now run the django dev server to see if the 'hello vite' message appears.<br>
+
+- Adding hot module replacement (HMR) with django-vite<br>
+(This is so that we don't have to run npm run build everytime we make a change.)
+
+- Vite in addition to being a bundler, is also a server with HMR built into it.<br>
+The problem is that in order to use HMR, we need to serve our assets using vite's server.
+This is where django-vite comes in. It gives us {% vite_asset %} to load js files. <br>
+And provides {% vite_hmr_client %} to add HMR.<br>
+
+It works like this: if we're in dev mode (debug is on), serve file from vite, otherwise serve the built version.
+
+9. Now update base.html by replacing load static with load django_vite and static link to js bundle by vite_asset directive.
+Also add vite hmr client tag to head
+(the vite_asset directive points direclty to assets/index.js not the bundle file)
+(if dev_mode is off, django_vite will detect it and use manifest.json to load the bundle js file instead of source js file)
+
+We also need to install django_vite and update the settings (add to apps, add its config var DJANGO_VITE)
+```
+> pip install django-vite
+```
+
+10. Add another npm comamnd for running the vite dev server
+Turn on the vite dev server in one terminal (will serve static files only)
+and django dev server in another terminal. visist index page, and change something in index.js file to check the HMR.
+(Also django_vite was throwing errors, apparently required STATIC_ROOT)
+(STATIC_ROOT cannot be equal to STATICFILES_DIRS so i set it to statc/dist)
+(STATIC_ROOT will be where collectstatic command will dump the output static files, not sure how it is used here)
