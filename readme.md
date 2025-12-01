@@ -104,3 +104,15 @@ and django dev server in another terminal. visist index page, and change somethi
 (Also django_vite was throwing errors, apparently required STATIC_ROOT)
 (STATIC_ROOT cannot be equal to STATICFILES_DIRS so i set it to statc/dist)
 (STATIC_ROOT will be where collectstatic command will dump the output static files, not sure how it is used here)
+
+
+- How to add other js libraries?
+11. We're going to try adding the lodash library (utility for common programming tasks) as an example.
+```
+> npm install lodash
+```
+Note: For packages that will be used in dev stage (such as linters, testing libraries), you should include --save-dev or -D to install as development dependency. Tooling will often remove these packages for production to reduce the load.
+
+12. The import it in source index.js file
+(this process must be followed for other packages as well. npm install and then load in source index.js)
+

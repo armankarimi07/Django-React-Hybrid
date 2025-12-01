@@ -1,8 +1,11 @@
 // import 'vite/modulepreload-polyfill';
-console.log('index.js');
+import _ from 'lodash';
+
 function component() {
   const element = document.createElement('div');
-  element.innerHTML = 'Hello Vite';
+  element.innerHTML =  _.join(['Hello', 'lodash'], ' ');
   return element;
 }
 document.body.appendChild(component());
+
+console.log("index.js loaded");
