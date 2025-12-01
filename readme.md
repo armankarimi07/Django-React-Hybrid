@@ -116,3 +116,23 @@ Note: For packages that will be used in dev stage (such as linters, testing libr
 12. The import it in source index.js file
 (this process must be followed for other packages as well. npm install and then load in source index.js)
 
+
+- Setting up React
+13. Install React
+```
+> npm install -D @vitejs/plugin-react
+```
+
+14. Add (react's plugin) it to vite.config.js
+
+15. Then install React and ReactDOM
+
+16. Create a simple react component
+(Using a .jsx extension automatically tells Vite to load our JSX parser, so we can use JSX syntax in our code. )
+(I'm putting this inside assets/)
+
+17. Update vite.config.js by adding a new entry point
+
+18. Update _base.html (hello.jsx will inject react code into a div with the id of root)
+(also update the vite_asset to point to hello.jsx) ?(this will remove index.js from our code, but why?)
+
