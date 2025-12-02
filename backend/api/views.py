@@ -1,15 +1,20 @@
 import json
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
 from django.contrib.auth import authenticate, login, logout
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse, HttpRequest
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_POST
+from rest_framework import viewsets
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import authenticate, login
 
 from api.models import Employee
+from api.serializers import EmployeeSerializer
 
 # Create your views here.
 
@@ -17,7 +22,19 @@ def index(request):
     return render(request, "api/index.html")
 
 
-# @method_decorator(login_required, name='dispatch')
+class EmployeeViewSet(viewsets.ModelViewSet):
+    serializer_class = EmployeeSerializer
+
+    def get_queryset(self):
+        # filter queryset based on logged in user
+        return self.request.user.employees.all()
+
+    def perform_create(self, serializer):
+        # ensure current user is correctly populated on new objects
+        serializer.save(user=self.request.user)
+
+
+@method_decorator(login_required, name='dispatch')
 class EmployeeView(TemplateView):
     # our hybrid template, shown above
     template_name = 'api/index.html'
@@ -25,6 +42,18 @@ class EmployeeView(TemplateView):
     def get_context_data(self, **kwargs):
         # passing the department choices to the template in the context
         return {'department_choices': [{ 'id': c[0], 'name': c[1]} for c in Employee.DEPARTMENT_CHOICES],}
+    
+    
+def authenticate_view(request):
+    if request.method == "POST":
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            user = form.get_user()  # AuthenticationForm already authenticates
+            login(request, user)
+            return redirect(reverse('api:index'))
+        return render(request, "api/login.html", {'form': form})
+    form = AuthenticationForm()
+    return render(request, "api/login.html", {'form': form})
         
         
 @require_POST
@@ -36,7 +65,7 @@ def login_view(request):
     print("USERNAME and PASSWORD: ", username, password)
     if username is None or password is None:
         return JsonResponse({"details": "Please provide username and password"})
-    user = authenticate(username=username, password=password)
+    user = authenticate(request, username=username, password=password)
     if user is not None:
         login(request, user)
         return JsonResponse({"details": "Successfully logged in"})

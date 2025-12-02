@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'django_vite',
     'api',
 ]
@@ -137,6 +138,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # and session_cookie_httponly to true
 # will block the client side js from accessing csrf and session cookies
 
+LOGIN_URL = "api:login"
 
 DJANGO_VITE = {
   "default": {

@@ -16,6 +16,12 @@
     </script>
 </head>
 <body class="m-4">
+    {% if user.is_authenticated %}
+        <script>
+            console.log("auth ok");
+        </script>
+    {% endif %}
+    <a href="{% url 'api:index' %}">index</a>
     {% block content %}
     {% endblock content %}
     {% vite_asset 'assets/main.jsx' %}

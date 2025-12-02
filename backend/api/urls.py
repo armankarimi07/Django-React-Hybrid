@@ -1,4 +1,5 @@
 from django.urls import path
+from rest_framework import routers
 
 from api import views
 
@@ -10,6 +11,13 @@ urlpatterns = [
     path("session/", views.session_view, name="api_session"),
     path("whoami/", views.whoami_view, name="api_whoami"),
     
+    path("manual-login/", views.authenticate_view, name='login'),
+    
     path('employees-list/', views.EmployeeView.as_view(), name='employees_list'),
     path('', views.index, name='index'),
 ]
+
+router = routers.DefaultRouter()
+router.register('employees', views.EmployeeViewSet, basename='employees')
+
+urlpatterns += router.urls
