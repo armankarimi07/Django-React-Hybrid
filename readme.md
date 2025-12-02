@@ -174,3 +174,16 @@ Since we're serving react pages directly from django, there is no need for handl
 VERY IMPORTANT:
 the vite_asset template directive must point to assets (entry files)
 django_vite will automatically decide which files to server, entry assets or build files by checking DEBUG and manifest.json
+
+ERROR:
+"@vitejs/plugin-react can't detect preamble. Something is wrong."
+RESULT: I was able to fix this by a script tag that will directly import it from vite server (added to base html)
+```
+<script type="module">
+    import RefreshRuntime from 'http://localhost:5173/static/@react-refresh'
+    RefreshRuntime.injectIntoGlobalHook(window)
+    window.$RefreshReg$ = () => {}
+    window.$RefreshSig$ = () => (type) => type
+    window.__vite_plugin_react_preamble_installed__ = true
+</script>
+```

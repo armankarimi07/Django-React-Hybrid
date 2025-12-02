@@ -7,10 +7,17 @@
     <title>Document</title>
     {% vite_hmr_client %}
     {% vite_asset 'assets/style.css' %}
-    {% vite_asset 'assets/hello.jsx' %}
+    <script type="module">
+        import RefreshRuntime from 'http://localhost:5173/static/@react-refresh'
+        RefreshRuntime.injectIntoGlobalHook(window)
+        window.$RefreshReg$ = () => {}
+        window.$RefreshSig$ = () => (type) => type
+        window.__vite_plugin_react_preamble_installed__ = true
+    </script>
 </head>
 <body class="m-4">
     {% block content %}
     {% endblock content %}
+    {% vite_asset 'assets/hello.jsx' %}
 </body>
 </html>
