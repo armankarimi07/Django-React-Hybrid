@@ -1,16 +1,11 @@
 import { createRoot } from 'react-dom/client'
 
-function MyButton() {
-  return (
-    <button>I'm a button</button>
-  );
-}
-
+import MyApp from './javascript/pages/App';
 
 const root = createRoot(document.getElementById('root'));
 root.render(
     <div>
         <h1 className="text-center text-3xl text-indigo-200 font-bold">Hello, React!</h1>
-        <MyButton />
+        <MyApp />
     </div>
 );
