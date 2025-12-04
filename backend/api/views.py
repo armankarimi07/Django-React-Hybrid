@@ -12,6 +12,7 @@ from django.views.decorators.http import require_POST
 from rest_framework import viewsets
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login
+from drf_spectacular.utils import extend_schema_view, extend_schema
 
 from api.models import Employee
 from api.serializers import EmployeeSerializer
@@ -22,6 +23,14 @@ def index(request):
     return render(request, "api/index.html")
 
 
+@extend_schema_view(
+    create=extend_schema(operation_id='employees_create'),
+    list=extend_schema(operation_id='employees_list'),
+    retrieve=extend_schema(operation_id='employees_retrieve'),
+    update=extend_schema(operation_id='employees_update'),
+    partial_update=extend_schema(operation_id='employees_partial_update'),
+    destroy=extend_schema(operation_id='employees_destroy'),
+)
 class EmployeeViewSet(viewsets.ModelViewSet):
     serializer_class = EmployeeSerializer
 
