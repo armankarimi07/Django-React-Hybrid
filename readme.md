@@ -276,6 +276,7 @@ SPECTACULAR_SETTINGS = {
 (i was able to include the login view using the api_view decorator, sort of)
 
 9. Handling urls
+Handling URLS in hybrid applications is extremely complicated
 Tutorial suggests using React Router<br>
 React Router has three modes: Framework, Data, Declarative
 ```
@@ -286,3 +287,4 @@ React Router has three modes: Framework, Data, Declarative
 ```
 > npm install react-router-dom
 ```
+

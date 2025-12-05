@@ -29,6 +29,13 @@ def index(request):
     return render(request, "api/index.html")
 
 
+class MyReactView(TemplateView):
+    template_name = 'react_app.html'
+
+    def get_context_data(self, **kwargs):
+        return {'context_variable': 'value'}
+
+
 class EmployeeViewSet(viewsets.ModelViewSet):
     serializer_class = EmployeeSerializer
 
