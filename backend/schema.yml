@@ -4,11 +4,11 @@ info:
   version: 1.0.0
   description: A guide to how to integrate frontend with django.
 paths:
-  /employees/:
+  /api/signup/:
     get:
-      operationId: employees_list
+      operationId: signup_retrieve
       tags:
-      - employees
+      - signup
       security:
       - cookieAuth: []
       - basicAuth: []
@@ -18,80 +18,23 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Employee'
+                $ref: '#/components/schemas/Signup'
           description: ''
     post:
-      operationId: employees_create
+      operationId: signup_create
       tags:
-      - employees
+      - signup
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Employee'
+              $ref: '#/components/schemas/Signup'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Employee'
+              $ref: '#/components/schemas/Signup'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Employee'
-        required: true
-      security:
-      - cookieAuth: []
-      - basicAuth: []
-      - {}
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Employee'
-          description: ''
-  /employees/{id}/:
-    get:
-      operationId: employees_retrieve
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: string
-        required: true
-      tags:
-      - employees
-      security:
-      - cookieAuth: []
-      - basicAuth: []
-      - {}
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Employee'
-          description: ''
-    put:
-      operationId: employees_update
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: string
-        required: true
-      tags:
-      - employees
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Employee'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Employee'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Employee'
+              $ref: '#/components/schemas/Signup'
         required: true
       security:
       - cookieAuth: []
@@ -102,117 +45,23 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Employee'
+                $ref: '#/components/schemas/Signup'
           description: ''
-    patch:
-      operationId: employees_partial_update
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: string
-        required: true
-      tags:
-      - employees
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchedEmployee'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedEmployee'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedEmployee'
-      security:
-      - cookieAuth: []
-      - basicAuth: []
-      - {}
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Employee'
-          description: ''
-    delete:
-      operationId: employees_destroy
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: string
-        required: true
-      tags:
-      - employees
-      security:
-      - cookieAuth: []
-      - basicAuth: []
-      - {}
-      responses:
-        '204':
-          description: No response body
 components:
   schemas:
-    DepartmentEnum:
-      enum:
-      - hr
-      - finance
-      - engineering
-      - marketing
-      - sales
-      type: string
-      description: |-
-        * `hr` - Human Resources
-        * `finance` - Finance
-        * `engineering` - Engineering
-        * `marketing` - Marketing
-        * `sales` - Sales
-    Employee:
+    Signup:
       type: object
       properties:
-        id:
-          type: integer
-          readOnly: true
-        user:
-          type: integer
-          readOnly: true
-        name:
+        username:
           type: string
-          maxLength: 100
-        department:
-          $ref: '#/components/schemas/DepartmentEnum'
-        salary:
-          type: integer
-          maximum: 9223372036854775807
-          minimum: 0
-          format: int64
+        email:
+          type: string
+          format: email
+        passwrod:
+          type: string
       required:
-      - department
-      - id
-      - name
-      - salary
-      - user
-    PatchedEmployee:
-      type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        user:
-          type: integer
-          readOnly: true
-        name:
-          type: string
-          maxLength: 100
-        department:
-          $ref: '#/components/schemas/DepartmentEnum'
-        salary:
-          type: integer
-          maximum: 9223372036854775807
-          minimum: 0
-          format: int64
+      - passwrod
+      - username
   securitySchemes:
     basicAuth:
       type: http

@@ -258,14 +258,31 @@ SPECTACULAR_SETTINGS = {
 
 6. After installing required java version (this uses typescript, tutorial uses this):
 ```
-openapi-generator-cli generate -i schema.yml -g typescript-fetch -o ./assets/src/api/
+> openapi-generator-cli generate -i schema.yml -g typescript-fetch -o ./assets/src/api/
 ```
 
 7. (This is javascript version)
 ```
-openapi-generator-cli generate -i schema.yml -g javascript -o ./assets/src/api/
+> openapi-generator-cli generate -i schema.yml -g javascript -o ./assets/src/api/
 ```
 
 - the -i flag, tells it where to find the schema.yml file
 - the -g typescript-fetch tells it to genereate client for typescript and fetch library (which i changed to javascript)
 - the -o flag tells it where to save the client files
+
+8. drf-spectacular only recognizes api views
+(views that have a serializer, or inherit from api classes from rest_framework)
+(or api_view decorator from rest_framework)
+(i was able to include the login view using the api_view decorator, sort of)
+
+9. Handling urls
+Tutorial suggests using React Router<br>
+React Router has three modes: Framework, Data, Declarative
+```
+> npm i react-router
+```
+(crap, everything is ts)
+(attempting to use react-router-dom)
+```
+> npm install react-router-dom
+```

@@ -72,7 +72,7 @@ export class EmployeesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
 
-        let urlPath = `/employees/`;
+        let urlPath = `/api/employees/`;
 
         const response = await this.request({
             path: urlPath,
@@ -110,7 +110,7 @@ export class EmployeesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
 
-        let urlPath = `/employees/{id}/`;
+        let urlPath = `/api/employees/{id}/`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
         const response = await this.request({
@@ -140,7 +140,7 @@ export class EmployeesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
 
-        let urlPath = `/employees/`;
+        let urlPath = `/api/employees/`;
 
         const response = await this.request({
             path: urlPath,
@@ -179,7 +179,7 @@ export class EmployeesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
 
-        let urlPath = `/employees/{id}/`;
+        let urlPath = `/api/employees/{id}/`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
         const response = await this.request({
@@ -218,7 +218,7 @@ export class EmployeesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
 
-        let urlPath = `/employees/{id}/`;
+        let urlPath = `/api/employees/{id}/`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
         const response = await this.request({
@@ -265,7 +265,7 @@ export class EmployeesApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = "Basic " + btoa(this.configuration.username + ":" + this.configuration.password);
         }
 
-        let urlPath = `/employees/{id}/`;
+        let urlPath = `/api/employees/{id}/`;
         urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
 
         const response = await this.request({

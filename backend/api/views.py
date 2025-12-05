@@ -10,12 +10,18 @@ from django.http import JsonResponse, HttpResponse, HttpRequest
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_POST
 from rest_framework import viewsets
+from rest_framework.decorators import api_view
+from rest_framework.parsers import JSONParser
+from rest_framework.response import Response
+from rest_framework.views import APIView
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login
-from drf_spectacular.utils import extend_schema_view, extend_schema
+from django.contrib.auth.models import User
+from drf_spectacular.utils import extend_schema_view, extend_schema, OpenApiParameter
+from drf_spectacular.types import OpenApiTypes
 
 from api.models import Employee
-from api.serializers import EmployeeSerializer
+from api.serializers import EmployeeSerializer, LoginSerializer, SignupSerializer
 
 # Create your views here.
 
@@ -23,17 +29,15 @@ def index(request):
     return render(request, "api/index.html")
 
 
-@extend_schema_view(
-    create=extend_schema(operation_id='employees_create'),
-    list=extend_schema(operation_id='employees_list'),
-    retrieve=extend_schema(operation_id='employees_retrieve'),
-    update=extend_schema(operation_id='employees_update'),
-    partial_update=extend_schema(operation_id='employees_partial_update'),
-    destroy=extend_schema(operation_id='employees_destroy'),
-)
 class EmployeeViewSet(viewsets.ModelViewSet):
     serializer_class = EmployeeSerializer
 
+    def retrieve(self, request, *args, **kwargs):
+        return super().retrieve(request, *args, **kwargs)
+    
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
+    
     def get_queryset(self):
         # filter queryset based on logged in user
         return self.request.user.employees.all()
@@ -63,6 +67,46 @@ def authenticate_view(request):
         return render(request, "api/login.html", {'form': form})
     form = AuthenticationForm()
     return render(request, "api/login.html", {'form': form})
+
+
+@extend_schema(request=SignupSerializer)
+@api_view(['GET', 'POST'])
+def signup_view(request: HttpRequest):
+    if request.method == "GET":
+        return Response({'message': "Enter username and password to signup"})
+    
+    if request.method == "POST":
+        data = JSONParser().parse(request)
+        serializer = SignupSerializer(data=data)
+        if serializer.is_valid():
+            username = serializer.validated_data.get('username')
+            email = serializer.validated_data.get('email')
+            password = serializer.validated_data.get('password')
+            User.objects.create(
+                username = username,
+                email = email,
+                password = password
+            )
+            return JsonResponse("OK")
+        print(serializer.errors)
+        return JsonResponse("error")
+    
+    
+class SignupView(APIView):
+    serializer_class = SignupSerializer
+    
+    def get(self, request):
+        return Response({'message': "Send username and password"})
+        
+    def post(self, request, format=None):
+        serializer = SignupSerializer(data=request.data)
+        if serializer.is_valid():
+            User.objects.create_user(
+                username=serializer.validated_data.get('username'),
+                password=serializer.validated_data.get('password')
+            )
+            return Response(serializer.data, status=201)
+        return Response(serializer.errors, status=400)
         
         
 @require_POST

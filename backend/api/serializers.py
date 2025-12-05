@@ -11,3 +11,14 @@ class EmployeeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Employee
         fields = ('id', 'user', 'name', 'department', 'salary')
+        
+        
+class LoginSerializer(serializers.Serializer):
+    username = serializers.CharField(required=True)
+    passwrod = serializers.CharField(required=True)
+    
+
+class SignupSerializer(serializers.Serializer):
+    username = serializers.CharField(required=True)
+    email = serializers.EmailField(required=False)
+    passwrod = serializers.CharField(required=True)
