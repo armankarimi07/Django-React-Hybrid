@@ -6,7 +6,7 @@ function SignupForm() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("input:", { username, password });
+        console.log("inputs:", { username, password });
 
         // call to api
     };
