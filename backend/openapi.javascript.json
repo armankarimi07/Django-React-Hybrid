@@ -1,0 +1,5 @@
+{
+    "generatorName": "javascript",
+    "inputSpec": "schema.yml",
+    "outputDir": "assets/src/api-js"
+}

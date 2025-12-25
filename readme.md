@@ -288,6 +288,8 @@ React Router has three modes: Framework, Data, Declarative
 > npm install react-router-dom
 ```
 
-Can't do this anymore.<br>
-Everything is in typescript.<br>
-I'll come back after learning some typescript.
+
+10. Generating api clients using json config files:<br>
+```
+> openapi-generator-cli generate -c openapi.javascript.json
+```

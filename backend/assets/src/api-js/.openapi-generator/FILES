@@ -1,0 +1,16 @@
+.babelrc
+.gitignore
+.openapi-generator-ignore
+.travis.yml
+README.md
+docs/Signup.md
+docs/SignupApi.md
+git_push.sh
+mocha.opts
+package.json
+src/ApiClient.js
+src/api/SignupApi.js
+src/index.js
+src/model/Signup.js
+test/api/SignupApi.spec.js
+test/model/Signup.spec.js
